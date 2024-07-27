@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "28402686746",
+    "project_id": "trashhandler-52edb",
+    "storage_bucket": "trashhandler-52edb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28402686746:android:b9aa96ce531b1681d3aaa3",
+        "android_client_info": {
+          "package_name": "com.example.demoapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB15YoKlKfRN8DjrLjki7w5jkKpzQsjZgk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
