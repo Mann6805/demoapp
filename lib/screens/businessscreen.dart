@@ -19,15 +19,17 @@ class BusinessScreen extends StatefulWidget {
 class _BusinessScreenState extends State<BusinessScreen> {
 
   bool isLoading = false;
+  bool ispan = false;
+  bool isbusiness = false;
   var vendorBusinessForm = GlobalKey<FormState>();
-  var panimg;
-  var businessimg;
   final TextEditingController _business_name = TextEditingController();
   final TextEditingController _business_gst = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
 
+    late File panfile;
+    late File businessfile;
     final double _deviceWidth = MediaQuery.of(context).size.width;
     final double _deviceHeight = MediaQuery.of(context).size.height;
     final ImagePicker imagePicker = ImagePicker();
@@ -191,6 +193,10 @@ class _BusinessScreenState extends State<BusinessScreen> {
                                       const SizedBox(
                                         width: 170,
                                       ),
+                                      ispan ? const Icon(
+                                        Icons.check,
+                                        color: Color(0XFF48AC38),
+                                      ):
                                       const Icon(
                                         Icons.upload_rounded,
                                         color: Color(0xFF693907),
@@ -200,11 +206,20 @@ class _BusinessScreenState extends State<BusinessScreen> {
                                       ),
                                       InkWell(
                                         onTap: () async {
+                                          ispan = true;
+                                          setState(() {});
                                           final XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
-                                          File panfile = File(file!.path);
-                                          panimg = decodeImageFromList(panfile.readAsBytesSync());
+                                          panfile = File(file!.path);
+                                          print(panfile);
                                         },
-                                        child: const Text(
+                                        child: ispan? 
+                                        const Text(
+                                          "Uploaded",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w200
+                                          ),
+                                        ):
+                                        const Text(
                                           "Upload",
                                           style: TextStyle(
                                             fontWeight: FontWeight.w200
@@ -235,6 +250,10 @@ class _BusinessScreenState extends State<BusinessScreen> {
                                       const SizedBox(
                                         width: 120,
                                       ),
+                                      isbusiness? const Icon(
+                                        Icons.check,
+                                        color: Color(0XFF48AC38),
+                                      ):
                                       const Icon(
                                         Icons.upload_rounded,
                                         color: Color(0xFF693907),
@@ -244,11 +263,19 @@ class _BusinessScreenState extends State<BusinessScreen> {
                                       ),
                                       InkWell(
                                         onTap: () async {
+                                          isbusiness = true;
+                                          setState(() {});
                                           final XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
-                                          File panfile = File(file!.path);
-                                          businessimg = decodeImageFromList(panfile.readAsBytesSync());
+                                          businessfile = File(file!.path);
                                         },
-                                        child: const Text(
+                                        child: isbusiness?
+                                        const Text(
+                                          "Uploaded",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w200
+                                          ),
+                                        ): 
+                                        const Text(
                                           "Upload",
                                           style: TextStyle(
                                             fontWeight: FontWeight.w200
@@ -266,12 +293,12 @@ class _BusinessScreenState extends State<BusinessScreen> {
                                       if(vendorBusinessForm.currentState!.validate()){
                                         isLoading = true;
                                         setState(() {});
-                                        await BusinessScreenController.createProfile(widget.mobile_no, _business_name.text, _business_gst.text, panimg, businessimg);
+                                        await BusinessScreenController.createProfile(widget.mobile_no, _business_name.text, _business_gst.text, panfile, businessfile);
                                       }
                                       
                                     }, 
                                     style: OutlinedButton.styleFrom(
-                                      backgroundColor: (_business_name.text.isNotEmpty && panimg != Null && businessimg != Null) ? const Color(0xFF693907) : const Color(0XFF9C9898),
+                                      backgroundColor: (_business_name.text.isNotEmpty && ispan && isbusiness) ? const Color(0xFF693907) : const Color(0XFF9C9898),
                                       fixedSize: Size(_deviceWidth, _deviceHeight/15),
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(Radius.circular(15)),

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:demoapp/screens/otpscreen.dart';
@@ -7,17 +9,20 @@ class BusinessScreenController{
   static BuildContext? get context => null;
 
 
-  static Future createProfile(String mobile_no, String business_name, String business_gst, var panimg, var businessimg) async {
+  static Future createProfile(String mobile_no, String business_name, String business_gst, File panfile, File businessfile) async {
 
     Map<String, dynamic> data = {
         "business_gst" : business_gst,
         "business_name" : business_name,
-        "panimg" : panimg,
-        "businessimg" : businessimg
+        "panfile" : panfile,
+        "businessfile" : businessfile
     };
 
     final url = Uri.parse("https://trashandler-api-s-1-259j.onrender.com/vendorauth/");
     final response = await http.post(url, body: data);
+
+    print('Hellllllllo ${response.statusCode}');
+
 
     if (response.statusCode == 201){
       await FirebaseAuth.instance.verifyPhoneNumber(
