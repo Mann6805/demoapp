@@ -13,7 +13,7 @@ class customerLoginController {
       "mobile_no" : mobile_no
     };
 
-    final url = Uri.parse("https://trashandler-api-s-14.onrender.com/customersignin/");
+    final url = Uri.parse("https://trashandler-api-s-1-259j.onrender.com/customersignin/");
     final response = await http.post(url, body: customerData);
     print(response.statusCode);
     if (response.statusCode == 200){

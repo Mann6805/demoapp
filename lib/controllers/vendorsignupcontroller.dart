@@ -15,7 +15,7 @@ class VendorSignupController {
         "email" : email
     };
 
-    final url = Uri.parse("https://trashandler-api-s-14.onrender.com/vendorauth/");
+    final url = Uri.parse("https://trashandler-api-s-1-259j.onrender.com/vendorauth/");
     final response = await http.post(url, body: data);
 
     if (response.statusCode == 201){

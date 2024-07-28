@@ -13,7 +13,7 @@ class VendorLoginController {
       "mobile_no" : mobile_no,
     };
 
-    final url = Uri.parse("https://trashandler-api-s-14.onrender.com/vendorsignin/");
+    final url = Uri.parse("https://trashandler-api-s-1-259j.onrender.com/vendorsignin/");
     final response = await http.post(url, body: customerData);
     print(response.statusCode);
     if (response.statusCode == 200){
