@@ -2,6 +2,7 @@
 
 import 'dart:ui';
 
+import 'package:demoapp/screens/splashscreen.dart';
 import 'package:flutter/material.dart';
 
 class SuccessScreen extends StatelessWidget {
@@ -11,6 +12,20 @@ class SuccessScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final double _deviceWidth = MediaQuery.of(context).size.width;
+
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushAndRemoveUntil(
+        context, 
+        MaterialPageRoute(
+          builder: (context) {
+            return const SplashScreen();
+          }
+        ), 
+        (route) {
+          return false;
+        }
+      );
+    });
 
     return Scaffold(
       backgroundColor: const Color(0xFF693907),
