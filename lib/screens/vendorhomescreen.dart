@@ -11,11 +11,14 @@ class VendorHomeScreen extends StatefulWidget {
 }
 
 class _VendorHomeScreenState extends State<VendorHomeScreen> {
+
+  bool leads = true;
+  bool online = true;
+
   @override
   Widget build(BuildContext context) {
 
     final double _deviceWidth = MediaQuery.of(context).size.width;
-    final double _deviceHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -37,65 +40,68 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
           const SizedBox(
             height: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 15,left: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InkWell(
-                  onTap: () => (),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0XFF693907), 
-                      borderRadius: BorderRadius.all(Radius.circular(12))
-                    ),
-                    width: _deviceWidth/2.5,
-                    
-                    child: const Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 10, right: 20, bottom: 10, left: 20),
-                        child: 
-                          Text("New Leads",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14
-                            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              InkWell(
+                onTap: () {
+                  leads = true;
+                  setState(() {});
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: leads ? const Color(0XFF693907) : const Color(0XFF9C9898), 
+                    borderRadius: const BorderRadius.all(Radius.circular(12))
+                  ),
+                  width: _deviceWidth/2.3,
+                  
+                  child: const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10, right: 20, bottom: 10, left: 20),
+                      child: 
+                        Text("New Leads",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14
                           ),
-                      ),
+                        ),
                     ),
                   ),
                 ),
-                InkWell(
-                  onTap: () => (),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0XFF9C9898), 
-                      borderRadius: BorderRadius.all(Radius.circular(12))
-                    ),
-                    width: _deviceWidth/2.5,
-                    
-                    child: const Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 10, right: 20, bottom: 10, left: 20),
-                        child: 
-                          Text("Accepted Leads",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14
-                            ),
+              ),
+              InkWell(
+                onTap: () {
+                  leads = false;
+                  setState(() {});
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: leads ? const Color(0XFF9C9898) : const Color(0XFF693907), 
+                    borderRadius: const BorderRadius.all(Radius.circular(12))
+                  ),
+                  width: _deviceWidth/2.3,
+                  
+                  child: const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10, right: 20, bottom: 10, left: 20),
+                      child: 
+                        Text("Accepted Leads",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14
                           ),
-                      ),
+                        ),
                     ),
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
           const SizedBox(
             height: 15,
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 33,left: 33),
+          leads ? Padding(
+            padding: const EdgeInsets.only(right: 21,left: 21),
             child: Container(
               height: 45,
               decoration: BoxDecoration(
@@ -119,7 +125,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                   Padding(
                     padding: const EdgeInsets.only(right: 20.0),
                     child: GFToggle(
-                        onChanged: (val) => {},
+                        onChanged: (online) => {online = false},
                         value: true,
                         enabledThumbColor:Colors.white,
                         enabledTrackColor: const Color(0XFF48AC38),
@@ -129,13 +135,14 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                 ],
               ),
             ),
-          ),
+          )
+          : const SizedBox( height: 10,),
           const SizedBox(
             height: 50,
           ),
-          Column(
+          leads ? Column(
             children: [
-              Image(image: const AssetImage("assets/images/vendorhome.png"), width: _deviceWidth/1.1,),
+              Image(image: const AssetImage("assets/images/vendornewlead.png"), width: _deviceWidth/1.1,),
               const SizedBox(
                 height: 20,
               ),
@@ -148,7 +155,23 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                   ),
               ),
             ],
-          ),
+          ): Column(
+            children: [
+              Image(image: const AssetImage("assets/images/vendoracceptlead.png"), width: _deviceWidth/1.1,),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text("No accepted leads yet !", style: TextStyle(fontSize: 20,)),
+              SizedBox(
+                width: _deviceWidth/1.6,
+                child: const Text("keep the momentum going! New scrap opportunities are waiting. Review the 'New Leads' section to find your next haul", 
+                    style: TextStyle(fontWeight: FontWeight.w300, fontSize: 17),
+                    textAlign: TextAlign.center,
+                  ),
+              ),
+            ],
+          )
+          ,
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
