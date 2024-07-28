@@ -21,6 +21,8 @@ class _BusinessScreenState extends State<BusinessScreen> {
   bool isLoading = false;
   bool ispan = false;
   bool isbusiness = false;
+  late File panfile;
+  late File businessfile;
   var vendorBusinessForm = GlobalKey<FormState>();
   final TextEditingController _business_name = TextEditingController();
   final TextEditingController _business_gst = TextEditingController();
@@ -28,8 +30,6 @@ class _BusinessScreenState extends State<BusinessScreen> {
   @override
   Widget build(BuildContext context) {
 
-    late File panfile;
-    late File businessfile;
     final double _deviceWidth = MediaQuery.of(context).size.width;
     final double _deviceHeight = MediaQuery.of(context).size.height;
     final ImagePicker imagePicker = ImagePicker();
@@ -206,11 +206,11 @@ class _BusinessScreenState extends State<BusinessScreen> {
                                       ),
                                       InkWell(
                                         onTap: () async {
-                                          ispan = true;
-                                          setState(() {});
                                           final XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
                                           panfile = File(file!.path);
-                                          print(panfile);
+                                          ispan = true;
+                                          setState(() {});
+                                          print("${panfile}");
                                         },
                                         child: ispan? 
                                         const Text(
@@ -263,10 +263,11 @@ class _BusinessScreenState extends State<BusinessScreen> {
                                       ),
                                       InkWell(
                                         onTap: () async {
-                                          isbusiness = true;
-                                          setState(() {});
                                           final XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
                                           businessfile = File(file!.path);
+                                          print(businessfile);
+                                          isbusiness = true;
+                                          setState(() {});
                                         },
                                         child: isbusiness?
                                         const Text(
@@ -293,7 +294,15 @@ class _BusinessScreenState extends State<BusinessScreen> {
                                       if(vendorBusinessForm.currentState!.validate()){
                                         isLoading = true;
                                         setState(() {});
-                                        await BusinessScreenController.createProfile(widget.mobile_no, _business_name.text, _business_gst.text, panfile, businessfile);
+                                        try{
+                                          await BusinessScreenController.createProfile(widget.mobile_no, _business_name.text, _business_gst.text, panfile, businessfile);
+                                        }
+                                        catch(e){
+                                          print(e);
+                                        };
+                                        print("khtm");
+                                        isLoading = false;
+                                        setState(() {});
                                       }
                                       
                                     }, 

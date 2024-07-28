@@ -18,6 +18,8 @@ class BusinessScreenController{
         "businessfile" : businessfile
     };
 
+    print("Starting controller jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
+
     final url = Uri.parse("https://trashandler-api-s-1-259j.onrender.com/vendorauth/");
     final response = await http.post(url, body: data);
 
@@ -52,6 +54,7 @@ class BusinessScreenController{
       ); 
     }
     else{
+      print("Hello");
       SnackBar messagesnackbar = const SnackBar(
         backgroundColor: Colors.red,
         content: Text("There some error in your information.")
@@ -59,8 +62,6 @@ class BusinessScreenController{
       ScaffoldMessenger.of(context!).showSnackBar(
         (messagesnackbar)
       );
-      throw Exception();
     }
-
   }
 }

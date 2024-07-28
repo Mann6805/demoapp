@@ -2,7 +2,6 @@
 
 import 'dart:ui';
 
-import 'package:demoapp/screens/splashscreen.dart';
 import 'package:demoapp/screens/vendorhomescreen.dart';
 import 'package:flutter/material.dart';
 
