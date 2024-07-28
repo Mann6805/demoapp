@@ -23,7 +23,7 @@ class VendorSignupController {
         context,
         MaterialPageRoute(
           builder: (context) {
-            return const BusinessScreen();
+            return BusinessScreen(mobile_no: mobile_no);
           }
         )
       );

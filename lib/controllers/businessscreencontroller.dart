@@ -1,22 +1,22 @@
-// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages, use_build_context_synchronously
-
-import 'dart:convert';
-import 'package:demoapp/screens/otpscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:demoapp/screens/otpscreen.dart';
 import 'package:http/http.dart' as http;
-import 'package:demoapp/server/customerPost.dart';
 
-class CustomerSignupController {
+class BusinessScreenController{
+  static BuildContext? get context => null;
 
-  static Future<Customerpost> createProfile(String mobile_no, String email, BuildContext context) async {
+
+  static Future createProfile(String mobile_no, String business_name, String business_gst, var panimg, var businessimg) async {
+
     Map<String, dynamic> data = {
-        "name" : "Dummy",
-        "mobile_no" : mobile_no,
-        "email" : email
+        "business_gst" : business_gst,
+        "business_name" : business_name,
+        "panimg" : panimg,
+        "businessimg" : businessimg
     };
 
-    final url = Uri.parse("https://trashandler-api-s-1-259j.onrender.com/customerauth/");
+    final url = Uri.parse("https://trashandler-api-s-1-259j.onrender.com/vendorauth/");
     final response = await http.post(url, body: data);
 
     if (response.statusCode == 201){
@@ -29,33 +29,33 @@ class CustomerSignupController {
               backgroundColor: Colors.red,
               content: Text("This is invalid number.")
             );
-            ScaffoldMessenger.of(context).showSnackBar(
+            ScaffoldMessenger.of(context!).showSnackBar(
               (messagesnackbar)
             ); 
-        }, 
+        },
         codeSent: (String verificationid, int? resendtoken) {
           Navigator.pushReplacement(
-            context,
+            context!,
             MaterialPageRoute(
               builder: (context){
-                return Otpscreen(verificationid: verificationid,mobileno: mobile_no,iscustomer: true,);
-            }
+                return Otpscreen(verificationid: verificationid,mobileno: mobile_no,iscustomer: false,);
+              }
             )
           );
         }, 
-        codeAutoRetrievalTimeout: (String verificationid) {}
-      );
-      return Customerpost.fromJson(json.decode(response.body));
+        codeAutoRetrievalTimeout: (String verificationid) {} 
+      ); 
     }
     else{
       SnackBar messagesnackbar = const SnackBar(
         backgroundColor: Colors.red,
-        content: Text("User already exists with this credentials.")
+        content: Text("There some error in your information.")
       );
-      ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.of(context!).showSnackBar(
         (messagesnackbar)
       );
       throw Exception();
     }
+
   }
 }

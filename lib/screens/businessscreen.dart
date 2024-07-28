@@ -1,13 +1,16 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers, body_might_complete_normally_nullable
 
 import 'dart:io';
 
-import 'package:demoapp/screens/welcomescreen.dart';
+import 'package:demoapp/controllers/businessscreencontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class BusinessScreen extends StatefulWidget {
-  const BusinessScreen({super.key});
+
+  final String mobile_no;
+
+  const BusinessScreen({super.key, required this.mobile_no});
 
   @override
   State<BusinessScreen> createState() => _BusinessScreenState();
@@ -17,6 +20,8 @@ class _BusinessScreenState extends State<BusinessScreen> {
 
   bool isLoading = false;
   var vendorBusinessForm = GlobalKey<FormState>();
+  var panimg;
+  var businessimg;
   final TextEditingController _business_name = TextEditingController();
   final TextEditingController _business_gst = TextEditingController();
 
@@ -196,8 +201,8 @@ class _BusinessScreenState extends State<BusinessScreen> {
                                       InkWell(
                                         onTap: () async {
                                           final XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
-                                          File panfile = new File(file!.path);
-                                          var img = decodeImageFromList(panfile.readAsBytesSync());
+                                          File panfile = File(file!.path);
+                                          panimg = decodeImageFromList(panfile.readAsBytesSync());
                                         },
                                         child: const Text(
                                           "Upload",
@@ -219,28 +224,35 @@ class _BusinessScreenState extends State<BusinessScreen> {
                                     border: Border.all(color: const Color(0xFF693907)),
                                     borderRadius: BorderRadius.circular(15)
                                   ),
-                                  child: const Row (
+                                  child: Row (
                                     children: [
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 20,
                                       ),
-                                      Text(
+                                      const Text(
                                         "Business Picture"
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 120,
                                       ),
-                                      Icon(
+                                      const Icon(
                                         Icons.upload_rounded,
                                         color: Color(0xFF693907),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
-                                      Text(
-                                        "Upload",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w200
+                                      InkWell(
+                                        onTap: () async {
+                                          final XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
+                                          File panfile = File(file!.path);
+                                          businessimg = decodeImageFromList(panfile.readAsBytesSync());
+                                        },
+                                        child: const Text(
+                                          "Upload",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w200
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -249,27 +261,26 @@ class _BusinessScreenState extends State<BusinessScreen> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 20, right: 20, top: 25),
                                   child: ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context){
-                                            return const WelcomeScreen();
-                                          }
-                                        ),
-                                        (route){
-                                          return false;
-                                        }
-                                      );
+                                    onPressed: () async {
+
+                                      if(vendorBusinessForm.currentState!.validate()){
+                                        isLoading = true;
+                                        setState(() {});
+                                        await BusinessScreenController.createProfile(widget.mobile_no, _business_name.text, _business_gst.text, panimg, businessimg);
+                                      }
+                                      
                                     }, 
                                     style: OutlinedButton.styleFrom(
-                                      backgroundColor: const Color(0XFF9C9898),
+                                      backgroundColor: (_business_name.text.isNotEmpty && panimg != Null && businessimg != Null) ? const Color(0xFF693907) : const Color(0XFF9C9898),
                                       fixedSize: Size(_deviceWidth, _deviceHeight/15),
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(Radius.circular(15)),
                                       ),
                                     ),
-                                    child: const Text(
+                                    child: isLoading ?
+                                      const CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ) : const Text(
                                       "Continue",
                                       style: TextStyle(
                                         fontSize: 20,

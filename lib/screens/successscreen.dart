@@ -3,10 +3,13 @@
 import 'dart:ui';
 
 import 'package:demoapp/screens/splashscreen.dart';
+import 'package:demoapp/screens/vendorhomescreen.dart';
 import 'package:flutter/material.dart';
 
 class SuccessScreen extends StatelessWidget {
-  const SuccessScreen({super.key});
+
+  final bool iscustomer;
+  const SuccessScreen({super.key, required this.iscustomer});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class SuccessScreen extends StatelessWidget {
         context, 
         MaterialPageRoute(
           builder: (context) {
-            return const SplashScreen();
+            return (iscustomer) ?  const VendorHomeScreen() : const VendorHomeScreen(); 
           }
         ), 
         (route) {
