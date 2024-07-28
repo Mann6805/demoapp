@@ -134,13 +134,13 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
                                         ),
                                         errorBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: Color(0xFF693907), 
+                                            color: Colors.red, 
                                           ),
                                           borderRadius: BorderRadius.all(Radius.circular(15))
                                         ),
                                         focusedErrorBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: Color(0xFF693907), 
+                                            color: Colors.red, 
                                           ),
                                           borderRadius: BorderRadius.all(Radius.circular(15))
                                         ),
@@ -159,7 +159,7 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
                                     padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                                     child: TextFormField(
                                       controller: _vendor_number,
-                                       autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      autovalidateMode: AutovalidateMode.onUserInteraction,
                                       validator: (value){
                                         if(value == null || value.isEmpty || value.length !=10){
                                           return "Number is required";
@@ -185,13 +185,13 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
                                         ),
                                         errorBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: Color(0xFF693907), 
+                                            color: Colors.red, 
                                           ),
                                           borderRadius: BorderRadius.all(Radius.circular(15))
                                         ),
                                         focusedErrorBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: Color(0xFF693907), 
+                                            color: Colors.red, 
                                           ),
                                           borderRadius: BorderRadius.all(Radius.circular(15))
                                         ),
@@ -218,18 +218,6 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
                                           borderRadius: BorderRadius.all(Radius.circular(15))
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0xFF693907), 
-                                          ),
-                                          borderRadius: BorderRadius.all(Radius.circular(15))
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0xFF693907), 
-                                          ),
-                                          borderRadius: BorderRadius.all(Radius.circular(15))
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                             color: Color(0xFF693907), 
                                           ),
