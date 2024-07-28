@@ -23,7 +23,7 @@ class VendorSignupController {
         context,
         MaterialPageRoute(
           builder: (context) {
-            return BusinessScreen(mobile_no: mobile_no);
+            return BusinessScreen(mobile_no: mobile_no, vendor_id: jsonDecode(response.body)['id'].toString());
           }
         )
       );

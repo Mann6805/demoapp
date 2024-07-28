@@ -9,8 +9,9 @@ import 'package:image_picker/image_picker.dart';
 class BusinessScreen extends StatefulWidget {
 
   final String mobile_no;
+  final String vendor_id;
 
-  const BusinessScreen({super.key, required this.mobile_no});
+  const BusinessScreen({super.key, required this.mobile_no, required this.vendor_id});
 
   @override
   State<BusinessScreen> createState() => _BusinessScreenState();
@@ -206,7 +207,7 @@ class _BusinessScreenState extends State<BusinessScreen> {
                                       ),
                                       InkWell(
                                         onTap: () async {
-                                          final XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
+                                          final XFile? file = await imagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
                                           panfile = File(file!.path);
                                           ispan = true;
                                           setState(() {});
@@ -263,9 +264,9 @@ class _BusinessScreenState extends State<BusinessScreen> {
                                       ),
                                       InkWell(
                                         onTap: () async {
-                                          final XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
+                                          final XFile? file = await imagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
                                           businessfile = File(file!.path);
-                                          print(businessfile);
+                                          print(businessfile.path);
                                           isbusiness = true;
                                           setState(() {});
                                         },
@@ -295,12 +296,11 @@ class _BusinessScreenState extends State<BusinessScreen> {
                                         isLoading = true;
                                         setState(() {});
                                         try{
-                                          await BusinessScreenController.createProfile(widget.mobile_no, _business_name.text, _business_gst.text, panfile, businessfile);
+                                          await BusinessScreenController.createProfile(widget.vendor_id, widget.mobile_no, _business_name.text, _business_gst.text, panfile, businessfile, context);
                                         }
                                         catch(e){
                                           print(e);
                                         };
-                                        print("khtm");
                                         isLoading = false;
                                         setState(() {});
                                       }
