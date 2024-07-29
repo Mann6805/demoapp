@@ -1,4 +1,3 @@
-import 'package:demoapp/screens/vendorhomescreen.dart';
 import 'package:demoapp/screens/welcomescreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
