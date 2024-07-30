@@ -11,6 +11,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
+  late bool iscustomer;
   var user = FirebaseAuth.instance.currentUser;
 
   @override
@@ -32,8 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
   
   }
 
-  void openDashboard(){
-
+  void openDashboard() {
     Navigator.pushReplacement(
       context, 
       MaterialPageRoute(

@@ -2,6 +2,7 @@
 
 import 'dart:ui';
 
+import 'package:demoapp/screens/customerhome.dart';
 import 'package:demoapp/screens/vendorhomescreen.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class SuccessScreen extends StatelessWidget {
         context, 
         MaterialPageRoute(
           builder: (context) {
-            return (iscustomer) ?  const VendorHomeScreen() : const VendorHomeScreen(); 
+            return (iscustomer) ?  const CustomerHomePage() : const VendorHomeScreen(); 
           }
         ), 
         (route) {

@@ -1,4 +1,5 @@
 import 'package:demoapp/screens/splashscreen.dart';
+import 'package:demoapp/screens/successscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -14,11 +15,12 @@ class MyApp extends StatelessWidget{
 
   @override 
   Widget build(BuildContext context) {
+
     return MaterialApp(
       theme: ThemeData(
         brightness: Brightness.light,
       ),
-      home: const SplashScreen (),
+      home: const SplashScreen(),
     );
   }
 }
