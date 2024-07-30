@@ -171,7 +171,7 @@ class _CustomerScrapDetailsState extends State<CustomerScrapDetails> {
                               final XFile? file = await imagePicker.pickImage(
                                   source: ImageSource.camera, imageQuality: 50);
                               if (file != null) {
-                                scrapphoto = File(file!.path);
+                                scrapphoto = File(file.path);
                                 setState(() {
                                   isscrap = true;
                                 });
@@ -203,11 +203,12 @@ class _CustomerScrapDetailsState extends State<CustomerScrapDetails> {
                             final XFile? file = await imagePicker.pickImage(
                                 source: ImageSource.gallery, imageQuality: 50);
                             if (file != null) {
-                              scrapphoto = File(file!.path);
+                              scrapphoto = File(file.path);
                               setState(() {});
                             }
                           },
-                          child: const Image(
+                          child: isscrap? Icon(Icons.done)
+                              : const Image(
                               height: 60,
                               width: 60,
                               image: AssetImage("assets/images/gallery.png")),
