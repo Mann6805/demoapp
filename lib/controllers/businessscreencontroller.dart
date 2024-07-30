@@ -41,7 +41,7 @@ class BusinessScreenController{
             context,
             MaterialPageRoute(
               builder: (context){
-                return Otpscreen(verificationid: verificationid,mobileno: mobile_no,iscustomer: false,);
+                return Otpscreen(verificationid: verificationid,mobileno: mobile_no,iscustomer: false, customerid: Null, vendorid: vendor_id,);
               }
             )
           );

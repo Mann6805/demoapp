@@ -1,10 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
+
+import 'package:demoapp/controllers/scrapdetailscontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CustomerScrapDetails extends StatefulWidget {
-  const CustomerScrapDetails({super.key});
+
+  var customer_id;
+  CustomerScrapDetails({super.key, required this.customer_id});
 
   @override
   State<CustomerScrapDetails> createState() => _CustomerScrapDetailsState();
@@ -14,6 +20,10 @@ class _CustomerScrapDetailsState extends State<CustomerScrapDetails> {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
   final int _maxLength = 300;
+  final ImagePicker imagePicker = ImagePicker();
+  late File scrapphoto;
+  bool isLoading = false;
+  bool isscrap = false;
 
   @override
   Widget build(BuildContext context) {
@@ -156,10 +166,24 @@ class _CustomerScrapDetailsState extends State<CustomerScrapDetails> {
                         const SizedBox(
                           width: 20,
                         ),
-                        const Image(
-                            height: 60,
-                            width: 60,
-                            image: AssetImage("assets/images/camera.png")),
+                        InkWell(
+                            onTap: () async {
+                              final XFile? file = await imagePicker.pickImage(
+                                  source: ImageSource.camera, imageQuality: 50);
+                              if (file != null) {
+                                scrapphoto = File(file!.path);
+                                setState(() {
+                                  isscrap = true;
+                                });
+                              }
+                            },
+                            child: isscrap
+                                ? Icon(Icons.done)
+                                : const Image(
+                                    height: 60,
+                                    width: 60,
+                                    image: AssetImage(
+                                        "assets/images/camera.png"))),
                         Transform.translate(
                           offset: Offset(25, 2),
                           child: Text(
@@ -174,10 +198,20 @@ class _CustomerScrapDetailsState extends State<CustomerScrapDetails> {
                         const SizedBox(
                           width: 20,
                         ),
-                        const Image(
-                            height: 60,
-                            width: 60,
-                            image: AssetImage("assets/images/gallery.png")),
+                        InkWell(
+                          onTap: () async {
+                            final XFile? file = await imagePicker.pickImage(
+                                source: ImageSource.gallery, imageQuality: 50);
+                            if (file != null) {
+                              scrapphoto = File(file!.path);
+                              setState(() {});
+                            }
+                          },
+                          child: const Image(
+                              height: 60,
+                              width: 60,
+                              image: AssetImage("assets/images/gallery.png")),
+                        ),
                         Transform.translate(
                           offset: Offset(25, 0),
                           child: Text(
@@ -213,7 +247,15 @@ class _CustomerScrapDetailsState extends State<CustomerScrapDetails> {
                     )),
               ),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    try {
+                      await Scrapdetailscontroller.createProfile(
+                        widget.customer_id, _descriptionController.text, scrapphoto, context);
+                    } catch (e) {
+                      print(e);
+                    }
+                    ;
+                  },
                   style: OutlinedButton.styleFrom(
                     backgroundColor: const Color(0xFF693907),
                     fixedSize: Size(320, 15),

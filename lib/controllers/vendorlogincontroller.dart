@@ -1,5 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages, camel_case_types, non_constant_identifier_names, use_build_context_synchronously
 
+import 'dart:convert';
+
 import 'package:demoapp/screens/otpscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +37,7 @@ class VendorLoginController {
             context,
             MaterialPageRoute(
               builder: (context){
-                return Otpscreen(verificationid: verificationid, mobileno: mobile_no,iscustomer: false,);
+                return Otpscreen(verificationid: verificationid, mobileno: mobile_no,iscustomer: false, customerid: Null, vendorid: jsonDecode(response.body)['vendor_id'].toString(),);
             }
             )
           );

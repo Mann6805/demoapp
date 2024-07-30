@@ -1,9 +1,11 @@
-import 'package:demoapp/screens/custombutton.dart';
 import 'package:demoapp/screens/customerscrapdetails.dart';
+import 'package:demoapp/screens/custombutton.dart';
 import 'package:flutter/material.dart';
 
 class CustomerHomePage extends StatefulWidget {
-  const CustomerHomePage({super.key});
+
+  var customer_id;
+  CustomerHomePage({super.key, required this.customer_id});
 
   @override
   State<CustomerHomePage> createState() => _CustomerHomePageState();
@@ -63,9 +65,9 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
-                  "Good evening, Parth",
-                  style: TextStyle(
+                Text(
+                  "Good evening, ${widget.customer_id}",
+                  style: const TextStyle(
                       color: Colors.grey, fontWeight: FontWeight.w500),
                 ),
                 const Padding(
@@ -157,12 +159,14 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
                   height: 10,
                 ),
                 ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return const CustomerScrapDetails();
-                      }));
-                    },
+                    onPressed: isSelected.contains(true)
+                        ? () {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) {
+                              return CustomerScrapDetails(customer_id: widget.customer_id,);
+                            }));
+                          }
+                        : null,
                     style: OutlinedButton.styleFrom(
                       backgroundColor: isSelected.contains(true)
                           ? const Color(0xFF693907)

@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 class SuccessScreen extends StatelessWidget {
 
   final bool iscustomer;
-  const SuccessScreen({super.key, required this.iscustomer});
+  var customerid;
+  var vendorid;
+  SuccessScreen({super.key, required this.iscustomer, required this.customerid, required this.vendorid});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class SuccessScreen extends StatelessWidget {
         context, 
         MaterialPageRoute(
           builder: (context) {
-            return (iscustomer) ?  const CustomerHomePage() : const VendorHomeScreen(); 
+            return (iscustomer) ?  CustomerHomePage(customer_id: customerid,) : VendorHomeScreen( vendorid: vendorid,); 
           }
         ), 
         (route) {

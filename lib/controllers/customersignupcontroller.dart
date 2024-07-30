@@ -38,7 +38,7 @@ class CustomerSignupController {
             context,
             MaterialPageRoute(
               builder: (context){
-                return Otpscreen(verificationid: verificationid,mobileno: mobile_no,iscustomer: true,);
+                return Otpscreen(verificationid: verificationid,mobileno: mobile_no,iscustomer: true, customerid: jsonDecode(response.body)['id'].toString(), vendorid: Null,);
             }
             )
           );

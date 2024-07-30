@@ -10,8 +10,10 @@ class Otpscreen extends StatefulWidget {
   final String mobileno;
   late final String verificationid;
   final bool iscustomer;
+  late dynamic customerid = Null;
+  late dynamic vendorid = Null;
 
-  Otpscreen({super.key, required this.verificationid, required this.mobileno, required this.iscustomer});
+  Otpscreen({super.key, required this.verificationid, required this.mobileno, required this.iscustomer, required this.customerid, required this.vendorid});
 
   @override
   State<Otpscreen> createState() => _OtpscreenState();
@@ -371,7 +373,7 @@ class _OtpscreenState extends State<Otpscreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return SuccessScreen(iscustomer: widget.iscustomer,);
+                                return SuccessScreen(iscustomer: widget.iscustomer, customerid: widget.customerid, vendorid: widget.vendorid,);
                               }
                             )
                           );

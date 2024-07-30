@@ -4,7 +4,9 @@ import 'package:flutter/widgets.dart';
 import 'package:getwidget/getwidget.dart';
 
 class VendorHomeScreen extends StatefulWidget {
-  const VendorHomeScreen({super.key});
+
+  var vendorid;
+  VendorHomeScreen({super.key, required this.vendorid});
 
   @override
   State<VendorHomeScreen> createState() => _VendorHomeScreenState();

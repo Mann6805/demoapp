@@ -1,5 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages, camel_case_types, non_constant_identifier_names, use_build_context_synchronously, prefer_interpolation_to_compose_strings
 
+import 'dart:convert';
+
 import 'package:demoapp/screens/otpscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +39,7 @@ class customerLoginController {
             context,
             MaterialPageRoute(
               builder: (context){
-                return Otpscreen(verificationid: verificationid, mobileno: mobile_no,iscustomer: true,);
+                return Otpscreen(verificationid: verificationid, mobileno: mobile_no,iscustomer: true, customerid: jsonDecode(response.body)['customer_id'].toString(), vendorid: Null,);
               }
             )
           );
