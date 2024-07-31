@@ -139,6 +139,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                           request.fields['is_active'] = online.toString();
 
                           final response = await request.send();
+                          print("${await response.stream.bytesToString()}");
                         },
                         value: online,
                         enabledThumbColor:Colors.white,
@@ -155,7 +156,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
             height: 50,
           ),
           leads ? Column(
-            children: [
+            children: online ? [] : [
               Image(image: const AssetImage("assets/images/vendornewlead.png"), width: _deviceWidth/1.1,),
               const SizedBox(
                 height: 20,
