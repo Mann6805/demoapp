@@ -163,7 +163,7 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
                         ? () {
                             Navigator.of(context)
                                 .push(MaterialPageRoute(builder: (context) {
-                              return CustomerScrapDetails(customer_id: widget.customer_id,);
+                              return CustomerScrapDetails(customerid: widget.customer_id,);
                             }));
                           }
                         : null,

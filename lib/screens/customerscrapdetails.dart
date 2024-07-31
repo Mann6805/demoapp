@@ -3,14 +3,14 @@
 import 'dart:io';
 
 import 'package:demoapp/controllers/scrapdetailscontroller.dart';
+import 'package:demoapp/screens/customerpickupscheduling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CustomerScrapDetails extends StatefulWidget {
-
-  var customer_id;
-  CustomerScrapDetails({super.key, required this.customer_id});
+  var customerid;
+  CustomerScrapDetails({super.key, required this.customerid});
 
   @override
   State<CustomerScrapDetails> createState() => _CustomerScrapDetailsState();
@@ -204,11 +204,14 @@ class _CustomerScrapDetailsState extends State<CustomerScrapDetails> {
                                 source: ImageSource.gallery, imageQuality: 50);
                             if (file != null) {
                               scrapphoto = File(file.path);
-                              setState(() {});
+                              setState(() {
+                                isscrap = true;
+                              });
                             }
                           },
-                          child: isscrap? Icon(Icons.done)
-                              : const Image(
+                          child: isscrap? 
+                            Icon(Icons.done)
+                            :Image(
                               height: 60,
                               width: 60,
                               image: AssetImage("assets/images/gallery.png")),
@@ -248,14 +251,17 @@ class _CustomerScrapDetailsState extends State<CustomerScrapDetails> {
                     )),
               ),
               ElevatedButton(
-                  onPressed: () async {
-                    try {
-                      await Scrapdetailscontroller.createProfile(
-                        widget.customer_id, _descriptionController.text, scrapphoto, context);
-                    } catch (e) {
-                      print(e);
-                    }
-                    ;
+                  onPressed: () {
+                      if (_weightController.text.length != 0 && _descriptionController.text.length != 0 && isscrap ){
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(
+                            builder: (context){
+                              return CustomerPickupScheduling(customerid: widget.customerid, weight: _weightController.text, description: _descriptionController.text, photo: scrapphoto,);
+                            }
+                          )
+                        );
+                      }
                   },
                   style: OutlinedButton.styleFrom(
                     backgroundColor: const Color(0xFF693907),
