@@ -20,11 +20,12 @@ class SuccessScreen extends StatelessWidget {
     final double _deviceWidth = MediaQuery.of(context).size.width;
 
     Future.delayed(const Duration(seconds: 3), () {
+      print("Customer : ${iscustomer}, Customerid : ${customerid}, Vendorid : ${vendorid}");
+      Checker().setCustomerStatus(iscustomer, customerid, vendorid);
       Navigator.pushAndRemoveUntil(
         context, 
         MaterialPageRoute(
           builder: (context) {
-            Checker().setCustomerStatus(iscustomer, customerid, vendorid);
             return (iscustomer) ?  CustomerHomePage(customer_id: customerid,) : VendorHomeScreen( vendorid: vendorid,); 
           }
         ), 

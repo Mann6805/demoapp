@@ -15,7 +15,7 @@ class Scrapdetailscontroller {
     request.fields['customer_id'] = customerid;
     request.fields['description'] = description;
     request.fields['landmark'] = "Ahmedabad";
-    request.fields['timeslots'] = "Morning";
+    request.fields['timeslots'] = "morning";
     request.files.add(
         await http.MultipartFile.fromPath('photo', scrapphotos.path));
 

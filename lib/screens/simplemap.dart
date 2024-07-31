@@ -9,6 +9,7 @@ class LocationScreen extends StatefulWidget {
 
 class _LocationScreenState extends State<LocationScreen> {
   late LatLng _currentPosition;
+  LatLng? _selectedPosition;
   late GoogleMapController _mapController;
 
   @override
@@ -48,6 +49,7 @@ class _LocationScreenState extends State<LocationScreen> {
     print(position);
     setState(() {
       _currentPosition = LatLng(position.latitude, position.longitude);
+      _selectedPosition = _currentPosition;
     });
 
     // Move the map camera to the current location.
@@ -63,34 +65,96 @@ class _LocationScreenState extends State<LocationScreen> {
     }
   }
 
+  void _onMapTapped(LatLng position) {
+    setState(() {
+      _selectedPosition = position;
+    });
+  }
+
+  void _goToNextPage() {
+    if (_selectedPosition != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LocationDetailPage(
+            latitude: _selectedPosition!.latitude,
+            longitude: _selectedPosition!.longitude,
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Current Location'),
       ),
-      body: _currentPosition == null
-          ? Center(child: CircularProgressIndicator())
-          : GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target: _currentPosition ?? LatLng(0, 0),
-                zoom: 14.0,
+      body: Stack(
+        children: [
+          _currentPosition == null
+              ? Center(child: CircularProgressIndicator())
+              : GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                    target: _currentPosition,
+                    zoom: 14.0,
+                  ),
+                  onMapCreated: (controller) {
+                    _mapController = controller;
+                    // Move the map camera to the current location once the map is created.
+                    if (_currentPosition != null) {
+                      _mapController.animateCamera(
+                        CameraUpdate.newCameraPosition(
+                          CameraPosition(
+                            target: _currentPosition,
+                            zoom: 14.0,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  onTap: _onMapTapped,
+                  markers: _selectedPosition != null
+                      ? {
+                          Marker(
+                            markerId: MarkerId('selected-location'),
+                            position: _selectedPosition!,
+                          ),
+                        }
+                      : {},
+                ),
+          if (_selectedPosition != null)
+            Positioned(
+              bottom: 20,
+              left: 20,
+              right: 20,
+              child: ElevatedButton(
+                onPressed: _goToNextPage,
+                child: Text('Confirm Location'),
               ),
-              onMapCreated: (controller) {
-                _mapController = controller;
-                // Move the map camera to the current location once the map is created.
-                if (_currentPosition != null) {
-                  _mapController.animateCamera(
-                    CameraUpdate.newCameraPosition(
-                      CameraPosition(
-                        target: _currentPosition,
-                        zoom: 14.0,
-                      ),
-                    ),
-                  );
-                }
-              },
             ),
+        ],
+      ),
+    );
+  }
+}
+
+class LocationDetailPage extends StatelessWidget {
+  final double latitude;
+  final double longitude;
+
+  LocationDetailPage({required this.latitude, required this.longitude});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Location Details'),
+      ),
+      body: Center(
+        child: Text('Latitude: $latitude\nLongitude: $longitude'),
+      ),
     );
   }
 }

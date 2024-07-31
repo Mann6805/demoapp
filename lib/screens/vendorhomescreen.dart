@@ -15,7 +15,7 @@ class VendorHomeScreen extends StatefulWidget {
 class _VendorHomeScreenState extends State<VendorHomeScreen> {
 
   bool leads = true;
-  bool online = true;
+  bool online = false;
 
   @override
   Widget build(BuildContext context) {
@@ -127,8 +127,10 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                   Padding(
                     padding: const EdgeInsets.only(right: 20.0),
                     child: GFToggle(
-                        onChanged: (online) => {online = false},
-                        value: true,
+                        onChanged: (online) => {
+                          online! ? online = true : online = false,
+                        },
+                        value: online,
                         enabledThumbColor:Colors.white,
                         enabledTrackColor: const Color(0XFF48AC38),
                         type: GFToggleType.ios,
