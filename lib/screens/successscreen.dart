@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 class SuccessScreen extends StatelessWidget {
 
   final bool iscustomer;
-  var customerid;
-  var vendorid;
+  String customerid;
+  String vendorid;
   SuccessScreen({super.key, required this.iscustomer, required this.customerid, required this.vendorid});
 
   @override

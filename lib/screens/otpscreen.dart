@@ -10,8 +10,8 @@ class Otpscreen extends StatefulWidget {
   final String mobileno;
   late final String verificationid;
   final bool iscustomer;
-  late dynamic customerid = Null;
-  late dynamic vendorid = Null;
+  late String customerid;
+  late String vendorid;
 
   Otpscreen({super.key, required this.verificationid, required this.mobileno, required this.iscustomer, required this.customerid, required this.vendorid});
 

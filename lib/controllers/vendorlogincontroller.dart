@@ -37,7 +37,7 @@ class VendorLoginController {
             context,
             MaterialPageRoute(
               builder: (context){
-                return Otpscreen(verificationid: verificationid, mobileno: mobile_no,iscustomer: false, customerid: Null, vendorid: jsonDecode(response.body)['vendor_id'].toString(),);
+                return Otpscreen(verificationid: verificationid, mobileno: mobile_no,iscustomer: false, customerid: "", vendorid: jsonDecode(response.body)['vendor_id'].toString(),);
             }
             )
           );

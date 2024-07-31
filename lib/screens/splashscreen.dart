@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
 
-  bool? iscustomer;
+  bool? iscustomer = Checker().isCustomer;
   String? customerid = Checker().customerid;
   String? vendorid = Checker().vendorid;
-  SplashScreen({super.key, required this.iscustomer});
+  SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -44,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
       context, 
       MaterialPageRoute(
           builder: (context) {
-            return widget.iscustomer! ? CustomerHomePage(customer_id: widget.customerid): VendorHomeScreen(vendorid: widget.vendorid);
+            return widget.iscustomer! ? CustomerHomePage(customer_id: widget.customerid!): VendorHomeScreen(vendorid: widget.vendorid!);
           }
         )
     );

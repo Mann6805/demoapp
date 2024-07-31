@@ -5,7 +5,7 @@ import 'package:getwidget/getwidget.dart';
 
 class VendorHomeScreen extends StatefulWidget {
 
-  var vendorid;
+  String vendorid;
   VendorHomeScreen({super.key, required this.vendorid});
 
   @override

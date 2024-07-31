@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class CustomerHomePage extends StatefulWidget {
 
-  var customer_id;
+  String customer_id;
   CustomerHomePage({super.key, required this.customer_id});
 
   @override

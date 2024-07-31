@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CustomerScrapDetails extends StatefulWidget {
-  var customerid;
+  String customerid;
   String text;
   CustomerScrapDetails({super.key, required this.customerid, required this.text});
 
