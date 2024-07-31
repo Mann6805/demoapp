@@ -1,9 +1,16 @@
+import 'package:demoapp/screens/customerhome.dart';
+import 'package:demoapp/screens/vendorhomescreen.dart';
 import 'package:demoapp/screens/welcomescreen.dart';
+import 'package:demoapp/server/checker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+
+  bool? iscustomer;
+  String? customerid = Checker().customerid;
+  String? vendorid = Checker().vendorid;
+  SplashScreen({super.key, required this.iscustomer});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -11,7 +18,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
-  late bool iscustomer;
   var user = FirebaseAuth.instance.currentUser;
 
   @override
@@ -22,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(
       const Duration(seconds: 3),
       () {
-        if (user==null){
+        if (user == null && widget.iscustomer == null){
           openLogin();
         }
         else {
@@ -38,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
       context, 
       MaterialPageRoute(
           builder: (context) {
-            return const WelcomeScreen();
+            return widget.iscustomer! ? CustomerHomePage(customer_id: widget.customerid): VendorHomeScreen(vendorid: widget.vendorid);
           }
         )
     );

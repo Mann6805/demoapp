@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:demoapp/screens/customerhome.dart';
 import 'package:demoapp/screens/vendorhomescreen.dart';
+import 'package:demoapp/server/checker.dart';
 import 'package:flutter/material.dart';
 
 class SuccessScreen extends StatelessWidget {
@@ -23,6 +24,7 @@ class SuccessScreen extends StatelessWidget {
         context, 
         MaterialPageRoute(
           builder: (context) {
+            Checker().setCustomerStatus(iscustomer, customerid, vendorid);
             return (iscustomer) ?  CustomerHomePage(customer_id: customerid,) : VendorHomeScreen( vendorid: vendorid,); 
           }
         ), 

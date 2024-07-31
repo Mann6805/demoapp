@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:demoapp/screens/customerhome.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -6,14 +7,15 @@ class Scrapdetailscontroller {
   static Future createProfile(
       String customerid, String description, File scrapphotos, BuildContext context) async {
     final url =
-        Uri.parse("https://trashandler-api-s-1-259j.onrender.com/upload/");
+        Uri.parse("https://trashandler-api-s-1-259j.onrender.com/pickup-request/");
 
     var request = http.MultipartRequest('POST', url);
-
+    request.fields['latitude'] = "0";
+    request.fields['longitude'] = "0";
     request.fields['customer_id'] = customerid;
     request.fields['description'] = description;
     request.fields['landmark'] = "Ahmedabad";
-    request.fields['time_slot'] = "morning";
+    request.fields['timeslots'] = "morning";
     request.files.add(
         await http.MultipartFile.fromPath('photo', scrapphotos.path));
 
@@ -32,6 +34,15 @@ class Scrapdetailscontroller {
           duration: Duration(seconds: 3),
         );
         ScaffoldMessenger.of(context).showSnackBar((messagesnackbar));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context){
+              return CustomerHomePage(customer_id: customerid);
+            }
+          
+          )
+        );
       } else {
         SnackBar messagesnackbar = SnackBar(
           backgroundColor: Colors.red,

@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CustomerPickupScheduling extends StatefulWidget {
-  var date = "";
+  late var date = "31 July 2024";
   bool isdone = false;
   String customerid;
   String weight;
   String description;
   File photo;
-  CustomerPickupScheduling({super.key, required this.customerid, required this.weight, required this.description, required this.photo});
+  String text;
+  CustomerPickupScheduling({super.key, required this.customerid, required this.weight, required this.description, required this.photo, required this.text});
 
   @override
   State<CustomerPickupScheduling> createState() =>
@@ -185,7 +186,7 @@ class _CustomerPickupSchedulingState extends State<CustomerPickupScheduling> {
                       context,
                       MaterialPageRoute(
                         builder: (context){
-                          return Pickupconfirmation();
+                          return Pickupconfirmation(customerid: widget.customerid, weight: widget.weight, description: widget.description, photo: widget.photo, date: widget.date, text: widget.text,);
                         }
                       )
                     );

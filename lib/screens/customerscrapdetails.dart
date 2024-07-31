@@ -10,7 +10,8 @@ import 'package:image_picker/image_picker.dart';
 
 class CustomerScrapDetails extends StatefulWidget {
   var customerid;
-  CustomerScrapDetails({super.key, required this.customerid});
+  String text;
+  CustomerScrapDetails({super.key, required this.customerid, required this.text});
 
   @override
   State<CustomerScrapDetails> createState() => _CustomerScrapDetailsState();
@@ -257,7 +258,7 @@ class _CustomerScrapDetailsState extends State<CustomerScrapDetails> {
                           context, 
                           MaterialPageRoute(
                             builder: (context){
-                              return CustomerPickupScheduling(customerid: widget.customerid, weight: _weightController.text, description: _descriptionController.text, photo: scrapphoto,);
+                              return CustomerPickupScheduling(customerid: widget.customerid, weight: _weightController.text, description: _descriptionController.text, photo: scrapphoto, text: widget.text,);
                             }
                           )
                         );

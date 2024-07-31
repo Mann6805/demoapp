@@ -12,6 +12,7 @@ class CustomerHomePage extends StatefulWidget {
 }
 
 class _CustomerHomePageState extends State<CustomerHomePage> {
+  String text = "";
   List<bool> isSelected = [false, false, false, false];
   @override
   Widget build(BuildContext context) {
@@ -90,6 +91,7 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
                         setState(() {
                           isselected = !isselected;
                           isSelected[0] = !isSelected[0];
+                          text = text + "Paper";
                         });
                       },
                       child: Custombutton(
@@ -104,6 +106,7 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
                         setState(() {
                           isselected = !isselected;
                           isSelected[1] = !isSelected[1];
+                          text = text + " Plastic";
                         });
                       },
                       child: Custombutton(
@@ -119,6 +122,7 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
                         setState(() {
                           isselected = !isselected;
                           isSelected[2] = !isSelected[2];
+                          text = text + " Metals";
                         });
                       },
                       child: Custombutton(
@@ -138,6 +142,7 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
                         setState(() {
                           isselected = !isselected;
                           isSelected[3] = !isSelected[3];
+                          text = text + "_ Others";
                         });
                       },
                       child: Custombutton(
@@ -163,7 +168,7 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
                         ? () {
                             Navigator.of(context)
                                 .push(MaterialPageRoute(builder: (context) {
-                              return CustomerScrapDetails(customerid: widget.customer_id,);
+                              return CustomerScrapDetails(customerid: widget.customer_id, text: text,);
                             }));
                           }
                         : null,
