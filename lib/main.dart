@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget{
       theme: ThemeData(
         brightness: Brightness.light,
       ),
-      home: LocationScreen(),
+      home: SplashScreen(),
     );
   }
 }

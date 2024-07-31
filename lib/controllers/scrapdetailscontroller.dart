@@ -1,12 +1,17 @@
 import 'dart:io';
+import 'package:demoapp/screens/customerhome.dart';
+import 'package:demoapp/server/checker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Scrapdetailscontroller {
-  static Future createProfile(
+  static Future createProfile (
       String customerid, String description, File scrapphotos, BuildContext context) async {
     final url =
         Uri.parse("https://trashandler-api-s-1-259j.onrender.com/pickup-request/");
+
+    String? address = await Checker().getAddress();
 
     var request = http.MultipartRequest('POST', url);
 
@@ -28,12 +33,17 @@ class Scrapdetailscontroller {
       print("Response: $responseString");
 
       if (response.statusCode == 201) {
-        SnackBar messagesnackbar = const SnackBar(
-          backgroundColor: Colors.green,
-          content: Text("Done Uploading"),
-          duration: Duration(seconds: 3),
+        Navigator.pushAndRemoveUntil(
+          context, 
+          MaterialPageRoute(
+            builder: (context){
+              return CustomerHomePage(customer_id: customerid, address: address!);
+            }
+          ), 
+          (route){
+            return false;
+          }
         );
-        ScaffoldMessenger.of(context).showSnackBar((messagesnackbar));
       } else {
         SnackBar messagesnackbar = SnackBar(
           backgroundColor: Colors.red,
@@ -45,7 +55,7 @@ class Scrapdetailscontroller {
     } catch (e) {
       SnackBar messagesnackbar = SnackBar(
         backgroundColor: Colors.red,
-        content: Text("Exception: $e"),
+        content: Text("No Vendor Online"),
         duration: Duration(seconds: 3),
       );
       ScaffoldMessenger.of(context).showSnackBar((messagesnackbar));

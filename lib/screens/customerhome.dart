@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 class CustomerHomePage extends StatefulWidget {
 
   String customer_id;
-  CustomerHomePage({super.key, required this.customer_id});
+  String address;
+  CustomerHomePage({super.key, required this.customer_id, required this.address});
 
   @override
   State<CustomerHomePage> createState() => _CustomerHomePageState();
@@ -24,10 +25,10 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
+        title: Center(
             child: Column(
           children: [
-            Text(
+            const Text(
               "Pickup Location - Home",
               style: TextStyle(
                   color: Colors.white,
@@ -35,8 +36,8 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
                   fontSize: 12),
             ),
             Text(
-              "M-404 Sumruddh Greens, Vastral",
-              style: TextStyle(
+              widget.address,
+              style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w300,
                   fontSize: 15),

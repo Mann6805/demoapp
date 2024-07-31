@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:demoapp/screens/customerhome.dart';
+import 'package:demoapp/screens/simplemap.dart';
 import 'package:demoapp/screens/vendorhomescreen.dart';
 import 'package:demoapp/server/checker.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class SuccessScreen extends StatelessWidget {
         context, 
         MaterialPageRoute(
           builder: (context) {
-            return (iscustomer) ?  CustomerHomePage(customer_id: customerid,) : VendorHomeScreen( vendorid: vendorid,); 
+            return LocationScreen(customerid: customerid, vendorid: vendorid, iscustomer: iscustomer); 
           }
         ), 
         (route) {

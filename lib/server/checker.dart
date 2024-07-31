@@ -4,7 +4,9 @@ class Checker {
   bool? isCustomer;
   String? customerid;
   String? vendorid;
+  String? address;
 
+  // Method to set customer status and IDs
   void setCustomerStatus(bool isCustomer, String customerid, String vendorid) async {
     this.isCustomer = isCustomer;
     this.customerid = customerid;
@@ -20,10 +22,28 @@ class Checker {
     print("Vendor ID: $vendorid");
   }
 
+  // Method to load customer status and IDs
   Future<void> loadCustomerStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isCustomer = prefs.getBool('isCustomer');
     customerid = prefs.getString('customerid');
     vendorid = prefs.getString('vendorid');
+    address = prefs.getString('address');
   }
+
+  // Method to set address
+  void setAddress(String address) async {
+    this.address = address;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('address', address);
+
+    print("Address set: $address");
+  }
+
+  Future<String?> getAddress() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('address');
+  }
+
 }

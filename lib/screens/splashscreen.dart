@@ -17,6 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   bool? isCustomer;
   String? customerid;
   String? vendorid;
+  String? address;
 
   @override
   void initState() {
@@ -42,6 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
       isCustomer = prefs.getBool('isCustomer');
       customerid = prefs.getString('customerid');
       vendorid = prefs.getString('vendorid');
+      address = prefs.getString('address');
     });
   }
 
@@ -51,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
       MaterialPageRoute(
         builder: (context) {
           return isCustomer!
-              ? CustomerHomePage(customer_id: customerid!)
+              ? CustomerHomePage(customer_id: customerid!, address: address!,)
               : VendorHomeScreen(vendorid: vendorid!);
         },
       ),

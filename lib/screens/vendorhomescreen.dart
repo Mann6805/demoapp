@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:http/http.dart' as http;
 
 class VendorHomeScreen extends StatefulWidget {
 
@@ -127,8 +128,17 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                   Padding(
                     padding: const EdgeInsets.only(right: 20.0),
                     child: GFToggle(
-                        onChanged: (online) => {
-                          online! ? online = true : online = false,
+                        onChanged: (online) async {
+                          print(online);
+                          online! ? online = true : online = false;
+                          final url = Uri.parse("https://trashandler-api-s-1-259j.onrender.com/vendor_status/");
+
+                          var request = http.MultipartRequest('POST', url);
+
+                          request.fields['vendor_id'] = widget.vendorid;
+                          request.fields['is_active'] = online.toString();
+
+                          final response = await request.send();
                         },
                         value: online,
                         enabledThumbColor:Colors.white,
