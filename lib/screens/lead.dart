@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class Lead extends StatelessWidget {
@@ -5,7 +7,8 @@ class Lead extends StatelessWidget {
   final String description;
   final String slot;
   final String landmark;
-  final double distance;
+  final int distance;
+  final String photo;
 
   const Lead({
     Key? key,
@@ -14,6 +17,7 @@ class Lead extends StatelessWidget {
     required this.slot,
     required this.landmark,
     required this.distance,
+    required this.photo,
   }) : super(key: key);
 
   @override
@@ -33,8 +37,8 @@ class Lead extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
-              child: Image.asset(
-                'assets/images/papervendor.png',
+              child: Image.network(
+                photo,
                 width: 400,
                 height: 200,
                 fit: BoxFit.cover,

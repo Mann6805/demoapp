@@ -40,7 +40,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
 
   Future<List<Map<String, dynamic>>> fetchPickupRequests() async {
     final url = Uri.parse(
-        'https://trashandler-api-s-1-259j.onrender.com/pickup-request/');
+        'https://trashandler-api-s-1-259j.onrender.com/vendor/pickup-requests/${widget.vendorid}/');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -182,11 +182,12 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                       itemBuilder: (context, index) {
                         var lead = pickupRequests[index];
                         return Lead(
-                            name: lead['customer_id'],
+                            name: lead['customer_name'],
                             description: lead['description'],
                             slot: lead['timeslots'],
                             landmark: lead['landmark'],
-                            distance: 3);
+                            distance: lead['distance'],
+                            photo: lead['photo']);
                       },
                     ),
                   )
