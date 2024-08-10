@@ -196,6 +196,7 @@ class _LocationScreenState extends State<LocationScreen> {
 
                         Checker checker = Checker();
                         checker.setAddress(_addressController.text);
+                        checker.setLocation( _selectedPosition!.latitude, _selectedPosition!.longitude);
 
                         final url = Uri.parse("https://trashandler-api-s-1-259j.onrender.com/cust_location/");
                         final addressList = [

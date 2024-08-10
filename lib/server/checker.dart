@@ -5,6 +5,8 @@ class Checker {
   String? customerid;
   String? vendorid;
   String? address;
+  double? customerlat;
+  double? customerlong;
 
   // Method to set customer status and IDs
   void setCustomerStatus(bool isCustomer, String customerid, String vendorid) async {
@@ -41,9 +43,28 @@ class Checker {
     print("Address set: $address");
   }
 
+  void setLocation(double latitutde, double longitude) async {
+    this.customerlat = latitutde;
+    this.customerlong = longitude;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble('customerlat', customerlat!);
+    await prefs.setDouble('customerlong', customerlong!);
+    print("Address set: $address");
+  }
+
   Future<String?> getAddress() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('address');
+  }
+
+  Future<double?> getlat() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getDouble('customerlat');
+  }
+
+  Future<double?> getlong() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getDouble('customerlong');
   }
 
 }

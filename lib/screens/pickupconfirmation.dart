@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:demoapp/controllers/scrapdetailscontroller.dart';
+import 'package:demoapp/server/checker.dart';
 import 'package:flutter/material.dart';
 
 class Pickupconfirmation extends StatefulWidget {
@@ -19,6 +20,9 @@ class Pickupconfirmation extends StatefulWidget {
 
 class _PickupconfirmationState extends State<Pickupconfirmation> {
 
+  
+  late double customerlat;
+  late double customerlong;
   var isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -156,7 +160,9 @@ class _PickupconfirmationState extends State<Pickupconfirmation> {
                   setState(() {
                     isLoading = true;
                   });
-                  await Scrapdetailscontroller.createProfile(widget.customerid, widget.description, widget.photo, context);
+                  customerlat = Checker().getlat() as double;
+                  customerlong = Checker().getlong() as double;
+                  await Scrapdetailscontroller.createProfile(widget.customerid, widget.description, widget.photo, customerlat, customerlong,context);
                   setState(() {
                     isLoading = false;
                   });

@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Scrapdetailscontroller {
   static Future createProfile (
-      String customerid, String description, File scrapphotos, BuildContext context) async {
+      String customerid, String description, File scrapphotos, double lat, double long, BuildContext context) async {
     final url =
         Uri.parse("https://trashandler-api-s-1-259j.onrender.com/pickup-request/");
 
@@ -15,8 +15,8 @@ class Scrapdetailscontroller {
 
     var request = http.MultipartRequest('POST', url);
 
-    request.fields['latitude'] = "0";
-    request.fields['longitude'] = "0";
+    request.fields['latitude'] = lat as String;
+    request.fields['longitude'] = long as String;
     request.fields['customer_id'] = customerid;
     request.fields['description'] = description;
     request.fields['landmark'] = "Ahmedabad";
