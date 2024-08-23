@@ -243,6 +243,10 @@ class _LocationScreenState extends State<LocationScreen> {
                         }
                       }
                       else{
+
+                        Checker checker = Checker();
+                        checker.vsetLocation( _selectedPosition!.latitude, _selectedPosition!.longitude);
+
                         final url = Uri.parse("https://trashandler-api-s-1-259j.onrender.com/vend_location/");
                         var request = http.MultipartRequest('POST', url);
 

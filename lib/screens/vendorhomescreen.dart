@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:demoapp/controllers/notificationcontroller.dart';
 import 'package:demoapp/screens/lead.dart';
+import 'package:demoapp/server/checker.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:getwidget/getwidget.dart';
 import 'dart:async';
@@ -19,15 +22,67 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
   bool online = false;
   List<Map<String, dynamic>> pickupRequests = [];
   Timer? _timer;
+  StreamSubscription<Position>? positionStream;
+  double? lat;
+  double? long;
+  late DateTime scheduleTime;
 
   @override
   void initState() {
     super.initState();
-    _startPolling();
+    _startPolling(online);
+    NotificationServices.scheduleNotification(message: "Please check this route.");
+  }
+  void startTrackingLocation() {
+    positionStream = Geolocator.getPositionStream(
+      locationSettings: const LocationSettings(
+        accuracy: LocationAccuracy.high,
+        distanceFilter: 10, 
+      ),
+    ).listen((Position position) {
+      setState(() {
+        lat = position.latitude;
+        long = position.longitude;
+      });
+    });
   }
 
-  void _startPolling() {
-    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+  void stopTrackingLocation() {
+    positionStream?.cancel();
+  }
+
+  void _stopPolling() {
+    _timer?.cancel();
+    _timer = null;
+  }
+
+  void _startPolling(bool online) async {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) async {
+      if (online) {
+        if (positionStream == null) {
+          startTrackingLocation(); // Start tracking if not already tracking
+        }
+        print("Sending location to server: $lat, $long");
+
+        // Send location data to the server
+        Checker().vsetLocation(lat!, long!);
+        Map<String, dynamic> data = {
+          "vendor_id": widget.vendorid,
+          "latitude": lat.toString(),
+          "longitude": long.toString(),
+        };
+        final url = Uri.parse(
+            "https://trashandler-api-s-1-259j.onrender.com/vend_location/");
+        final response = await http.post(url, body: data);
+        if (response.statusCode == 201) {
+          print(response.body);
+        } else {
+          print(response.body);
+        }
+      } else {
+        stopTrackingLocation();
+      }
       fetchPickupRequests().then((requests) {
         setState(() {
           pickupRequests = requests;
@@ -54,7 +109,6 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
   @override
   Widget build(BuildContext context) {
     final double _deviceWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -73,7 +127,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
           children: [
             const SizedBox(
               height: 20,
-            ),
+            ),                 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -155,9 +209,28 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 20.0),
                             child: GFToggle(
-                              onChanged: (value) => {
-                                online = value!,
-                                setState(() {}),
+                              onChanged: (value) async {
+                                Map<String, dynamic> data = {
+                                  "vendor_id": widget.vendorid,
+                                  "is_active": value!.toString()
+                                };
+                                final url = Uri.parse(
+                                    "https://trashandler-api-s-1-259j.onrender.com/vendor_status/");
+                                final response =
+                                    await http.post(url, body: data);
+                                if (response.statusCode == 201) {
+                                  print("Success");
+                                } else {
+                                  print(response.body);
+                                }
+                                online = value!;
+                                setState(() {});
+                                if (online){
+                                  _startPolling(online);
+                                }
+                                else{
+                                  _stopPolling();
+                                }
                               },
                               value: online,
                               enabledThumbColor: Colors.white,
