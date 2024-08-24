@@ -1,5 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:demoapp/controllers/notificationcontroller.dart';
+import 'package:demoapp/screens/routemap.dart';
 import 'package:demoapp/screens/splashscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.light,
       ),
-      home: SplashScreen(),
+      home: Routemap(),
     );
   }
 }
