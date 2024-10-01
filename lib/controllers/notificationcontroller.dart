@@ -35,8 +35,8 @@ class NotificationServices {
         backgroundColor: Colors.transparent
       ),
       schedule: NotificationCalendar(
-        hour: 16,
-        minute: 9,
+        hour: 22,
+        minute: 37,
         second: 0,
         millisecond: 0,
         repeats: true,

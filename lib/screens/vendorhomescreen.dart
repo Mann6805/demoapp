@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:demoapp/controllers/notificationcontroller.dart';
 import 'package:demoapp/screens/lead.dart';
+import 'package:demoapp/screens/routemap.dart';
 import 'package:demoapp/server/checker.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -127,7 +128,14 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
           children: [
             const SizedBox(
               height: 20,
-            ),                 
+            ), 
+            ElevatedButton(onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context){
+                  return const Routemap();
+                })
+              );
+            }, child: Icon(Icons.map)),               
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
